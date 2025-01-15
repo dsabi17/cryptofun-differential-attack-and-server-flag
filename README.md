@@ -21,9 +21,9 @@ code running on the server.
 
 + The server has a simplistic interface with three options:
 
-    1. Get guest token
-    2. Login
-    3. Exit
+1. Get guest token
+2. Login
+3. Exit
 
 - By analyzing the server code, we can find additional information:
     - GUEST_NAME = b'Anonymous'

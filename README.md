@@ -71,57 +71,43 @@ What we learn from the server code analysis:
 
 + To reiterate, a message looks like this:
 
-!(/assets/table1.jpg)
+!(/assets/image1.jpg)
 
-    + where message is noted as plain xor rnd, specifically, GUEST_NAME xor rnd (extracted from the guest token received sfrom the server).
++ where message is "plain xor rnd", to be exact, "GUEST_NAME xor rnd" (extracted from the guest token received from the server).
 
-    - Similarly, to construct an admin token, it must have the same
-    structure:
-        ADMIN_NAME xor rnd + SERVER_PUBLIC_BANNER + integrity
-    - Extracting GUEST_NAME and ADMIN_NAME from the server makes
-    creating the message straightforward.
++ Similarly, to construct an admin token, it must have the same structure:
+> ADMIN_NAME xor rnd + SERVER_PUBLIC_BANNER + integrity
++ Extracting GUEST_NAME and ADMIN_NAME from the server makes creating the message straightforward.
 
 We denote:
-GUEST_NAME xor rnd = m1
-ADMIN_NAME xor rnd = m2
------------------------
-m1 xor GUEST_NAME = rnd ---> m2 = ADMIN_NAME xor m1 xor GUEST_NAME
+> GUEST_NAME xor rnd = m1
+> ADMIN_NAME xor rnd = m2
+> -----------------------
+> m1 xor GUEST_NAME = rnd ---> m2 = ADMIN_NAME xor m1 xor GUEST_NAME
 
 
-    - To find the SERVER_PUBLIC_BANNER, we use steps 2 and 3 of the
++ To find the SERVER_PUBLIC_BANNER, we use steps 2 and 3 of the
     server's verification process:
 
-2. Verifies if SERVER_PUBLIC_BANNER exists in the token.
-3. Verifies token integrity.
+> 2. Verifies if SERVER_PUBLIC_BANNER exists in the token.
+> 3. Verifies token integrity.
 
-    - This process is divided into two parts:
-        1) Determining the start of the banner.
-        2) Determining the end of the banner.
++ This process is divided into two parts:
+    1. Determining the start of the banner.
+    2. Determining the end of the banner.
 
-1) Start of the Banner
+#### 1) Start of the Banner
 
-Assuming again our token looks like this, without knowing the
-boundaries between message, banner, and integrity:
+Assuming again our token looks like this, without knowing the boundaries between message, banner, and integrity:
 
-┌────────────────┬────────────────┬────────────────┐
-│ m0 m1 m2 ... mn│ b0 b1 b2 ... bn│i0 i1 i2 ... in │
-└────────────────┴────────────────┴────────────────┘
+!(/assets/image1.jpg)
 
-
-We construct a new payload by replacing one byte at a time from the
-guest token with "X", sending it to the server for login. This
-exploits the server's verification method.
+We construct a new payload by replacing one byte at a time from the guest token with "X", sending it to the server for login. This exploits the server's verification method.
 
 
 The steps would look like this:
 
-    "TOKEN" SENT                        SERVER RESPONSE
-┌────────────────┬────────────────┬────────────────┐
-│ X  m1 m2 ... mn│ b0 b1 b2 ... bn│i0 i1 i2 ... in │ -> Integrity error (naturally, since we
-└────────────────┴────────────────┴────────────────┘    altered the message)
-┌────────────────┬────────────────┬────────────────┐
-│ X  X  m2 ... mn│ b0 b1 b2 ... bn│i0 i1 i2 ... in │ -> Integrity error
-└────────────────┴────────────────┴────────────────┘
-...
+!(/assets/image2.jpg)
+
 
 

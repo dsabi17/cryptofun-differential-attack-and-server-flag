@@ -69,16 +69,11 @@ What we learn from the server code analysis:
 
 ### 2. A Little Theory and How to Build a Token
 
-    - To reiterate, a message looks like this:
++ To reiterate, a message looks like this:
 
-    message       SERVER_PUBLIC_BANNER    integrity
-┌────────────────┬────────────────┬────────────────┐
-│ m0 m1 m2 ... mn│ b0 b1 b2 ... bn│i0 i1 i2 ... in │
-└────────────────┴────────────────┴────────────────┘
+!(/assets/table1.jpg)
 
-where message is noted as plain xor rnd, specifically,
-GUEST_NAME xor rnd (extracted from the guest token received
-from the server).
+    + where message is noted as plain xor rnd, specifically, GUEST_NAME xor rnd (extracted from the guest token received sfrom the server).
 
     - Similarly, to construct an admin token, it must have the same
     structure:

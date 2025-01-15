@@ -36,41 +36,38 @@ code running on the server.
 >    + SERVER_PUBLIC_BANNER is always identical
 >    + integrity is unknown, but it ensures the token's validity.
 
+!(/assets/table1.jpg)
 
-    message   SERVER_PUBLIC_BANNER    integrity
-┌────────────────┬────────────────┬────────────────┐
-│ m0 m1 m2 ... mn│ b0 b1 b2 ... bn│i0 i1 i2 ... in │
-└────────────────┴────────────────┴────────────────┘
+> + We refer to "plain xor rnd" as "message".
+> + The token format helps simplify explanations.
+> + The sizes of the message, banner, and integrity are unknown,
+>      + but satisfy `|message| + |banner| + |integrity| <= 16`
 
-        --- We refer to plain xor rnd as "message".
-        --- The token format helps simplify explanations.
-        --- The sizes of the message, banner, and integrity are
-        unknown but satisfy |message| + |banner| + |integrity| <= 16
 
-    - The server's decryption function reveals more information, but
-    the useful ones are:
-        - It returns -1 if the SERVER_PUBLIC_BANNER is missing.
-        - It returns None if the integrity is incorrect.
-    - For guest tokens:
-    - They use GUEST_NAME as plain text in the encryption function.
-    - The server's login function reveals the verification order,
-    exploitable later:
++ The server's decryption function reveals more information, but the useful ones are:
+    + It returns -1 if the SERVER_PUBLIC_BANNER is missing.
+    + It returns None if the integrity is incorrect.
+      
+    + For guest tokens, the code uses GUEST_NAME as plain text in the encryption function.
+    + The server's login function reveals the verification order, which will be exploitable later:
+ 
+> 1. It ensures the token is <= 16 bytes.
+>     + which means that if the message resulting from ADMIN_NAME doesn't have 16 bytes, it doesn't require padding.
+> 2. It verifies if SERVER_PUBLIC_BANNER exists in the token.
+> 3. Verifies token integrity.
+> 4. Checks for guest/admin tokens or incoherent messages.
 
-        1. Ensures the token is <= 16 bytes.
-            ---> If the message resulting from ADMIN_NAME doesn't have
-            16 bytes, it doesn't require padding.
-        2. Verifies if SERVER_PUBLIC_BANNER exists in the token.
-        3. Verifies token integrity.
-        4. Checks for guest/admin tokens or incoherent messages.
+***
 
-    Conclusions from the server code analysis:
-        - The banner is consistent.
-        - Padding is unnecessary.
-        - The token's structure is understood.
-        - We know the verification order.
+What we learn from the server code analysis:
++ The banner is consistent.
++ Padding is unnecessary.
++ The token's structure.
++ We know the verification order.
 
-____________
-2. A Little Theory and How to Build a Token
+***
+
+### 2. A Little Theory and How to Build a Token
 
     - To reiterate, a message looks like this:
 

@@ -21,20 +21,21 @@ code running on the server.
 
 + The server has a simplistic interface with three options:
 
-1. Get guest token
-2. Login
-3. Exit
+> 1. Get guest token
+> 2. Login
+> 3. Exit
 
-- By analyzing the server code, we can find additional information:
-    - GUEST_NAME = b'Anonymous'
-    - The admin's name, referred to from now on as
-    ADMIN_NAME = b'Ephvuln'
-    - The integrity length is unknown.
-    - An encrypted message is structured as:
-    plain xor rnd + SERVER_PUBLIC_BANNER + integrity,
-        where rnd remains the same for each session,
-        SERVER_PUBLIC_BANNER is always identical and integrity is
-        unknown but ensures the token's validity.
++ By analyzing the server code, we can find additional information:
+
+> + GUEST_NAME = b'Anonymous'
+> + The admin's name, referred to from now on as ADMIN_NAME = b'Ephvuln'
+> + We don't know the integrity length
+> + An encrypted message is structured as:
+>>    plain xor rnd + SERVER_PUBLIC_BANNER + integrity,
+>    + where rnd remains the same for each session
+>    + SERVER_PUBLIC_BANNER is always identical
+>    + integrity is unknown, but it ensures the token's validity.
+
 
     message   SERVER_PUBLIC_BANNER    integrity
 ┌────────────────┬────────────────┬────────────────┐

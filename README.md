@@ -20,7 +20,8 @@ code running on the server.
 ### 1. The Server and What We Can Learn from Its Code
 
 + The server has a simplistic interface with three options:
-    &nbsp;&nbsp;&nbsp;&nbsp; 1. Get guest token
+
+    1. Get guest token
     2. Login
     3. Exit
 

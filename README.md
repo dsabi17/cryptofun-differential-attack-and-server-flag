@@ -11,16 +11,16 @@
 
   ***
 
-#### Part 1
+## Part 1
 
 + The first part requires us to capture a flag from a
 server. To explain the attack, we must first understand the
 code running on the server.
 
-##### 1. The Server and What We Can Learn from Its Code
+### 1. The Server and What We Can Learn from Its Code
 
 + The server has a simplistic interface with three options:
-    1. Get guest token
+    &nbsp;&nbsp;&nbsp;&nbsp; 1. Get guest token
     2. Login
     3. Exit
 

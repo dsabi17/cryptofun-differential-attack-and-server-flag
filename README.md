@@ -36,7 +36,7 @@ code running on the server.
 >    + SERVER_PUBLIC_BANNER is always identical
 >    + integrity is unknown, but it ensures the token's validity.
 
-!(/assets/table1.jpg)
+![](/assets/table1.png)
 
 > + We refer to "plain xor rnd" as "message".
 > + The token format helps simplify explanations.
@@ -71,7 +71,7 @@ What we learn from the server code analysis:
 
 + To reiterate, a message looks like this:
 
-!(/assets/image1.jpg)
+![](/assets/image1.png)
 
 + where message is "plain xor rnd", to be exact, "GUEST_NAME xor rnd" (extracted from the guest token received from the server).
 
@@ -100,14 +100,14 @@ We denote:
 
 Assuming again our token looks like this, without knowing the boundaries between message, banner, and integrity:
 
-!(/assets/image1.jpg)
+![](/assets/image1.png)
 
 We construct a new payload by replacing one byte at a time from the guest token with "X", sending it to the server for login. This exploits the server's verification method.
 
 
 The steps would look like this:
 
-!(/assets/image2.jpg)
+![](/assets/image2.png)
 
 
 

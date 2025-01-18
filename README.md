@@ -36,7 +36,7 @@ code running on the server.
 >    + SERVER_PUBLIC_BANNER is always identical
 >    + integrity is unknown, but it ensures the token's validity.
 
-![](/assets/table1.png)
+![](/assets/image1.svg)
 
 > + We refer to "plain xor rnd" as "message".
 > + The token format helps simplify explanations.
